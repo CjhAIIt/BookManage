@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.library.mapper.BorrowMapper">
+    <resultMap id="BorrowRecordResultMap" type="com.example.library.entity.BorrowRecord">
+        <id property="id" column="id"/>
+        <result property="userId" column="user_id"/>
+        <result property="bookId" column="book_id"/>
+        <result property="borrowDate" column="borrow_date"/>
+        <result property="returnDate" column="return_date"/>
+        <result property="dueDate" column="due_date"/>
+        <result property="status" column="status"/>
+    </resultMap>
+    
+    <resultMap id="BorrowRecordDTOResultMap" type="com.example.library.dto.BorrowRecordDTO">
+        <id property="id" column="id"/>
+        <result property="userId" column="user_id"/>
+        <result property="userName" column="username"/>
+        <result property="bookId" column="book_id"/>
+        <result property="bookTitle" column="book_title"/>
+        <result property="bookAuthor" column="book_author"/>
+        <result property="bookIsbn" column="book_isbn"/>
+        <result property="borrowDate" column="borrow_date"/>
+        <result property="returnDate" column="return_date"/>
+        <result property="dueDate" column="due_date"/>
+        <result property="status" column="status"/>
+    </resultMap>
+    
+    <insert id="insertRecord" parameterType="com.example.library.entity.BorrowRecord" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO borrow_record (user_id, book_id, borrow_date, due_date, status)
+        VALUES (#{userId}, #{bookId}, #{borrowDate}, #{dueDate}, #{status})
+    </insert>
+    
+    <select id="findById" resultMap="BorrowRecordResultMap">
+        SELECT * FROM borrow_record WHERE id = #{id}
+    </select>
+    
+    <select id="findByUserId" resultMap="BorrowRecordResultMap">
+        SELECT * FROM borrow_record WHERE user_id = #{userId}
+    </select>
+    
+    <select id="findByUserIdAndBookId" resultMap="BorrowRecordResultMap">
+        SELECT * FROM borrow_record WHERE user_id = #{userId} AND book_id = #{bookId}
+    </select>
+    
+    <select id="findAll" resultMap="BorrowRecordResultMap">
+        SELECT * FROM borrow_record
+    </select>
+    
+    <update id="updateRecord" parameterType="com.example.library.entity.BorrowRecord">
+        UPDATE borrow_record
+        SET user_id = #{userId}, book_id = #{bookId}, borrow_date = #{borrowDate},
+            return_date = #{returnDate}, due_date = #{dueDate}, status = #{status}
+        WHERE id = #{id}
+    </update>
+    
+    <delete id="deleteRecord">
+        DELETE FROM borrow_record WHERE id = #{id}
+    </delete>
+    
+    <!-- 获取用户的借阅记录，包含图书和用户信息 -->
+    <select id="findUserBorrowRecordsWithDetails" resultMap="BorrowRecordDTOResultMap">
+        SELECT 
+            br.id,
+            br.user_id,
+            u.username,
+            br.book_id,
+            b.title AS book_title,
+            b.author AS book_author,
+            b.isbn AS book_isbn,
+            br.borrow_date,
+            br.return_date,
+            br.due_date,
+            br.status
+        FROM borrow_record br
+        JOIN `user` u ON br.user_id = u.id
+        JOIN book b ON br.book_id = b.id
+        WHERE br.user_id = #{userId}
+        ORDER BY br.borrow_date DESC
+    </select>
+    
+    <!-- 获取所有借阅记录，包含图书和用户信息 -->
+    <select id="findAllBorrowRecordsWithDetails" resultMap="BorrowRecordDTOResultMap">
+        SELECT 
+            br.id,
+            br.user_id,
+            u.username,
+            br.book_id,
+            b.title AS book_title,
+            b.author AS book_author,
+            b.isbn AS book_isbn,
+            br.borrow_date,
+            br.return_date,
+            br.due_date,
+            br.status
+        FROM borrow_record br
+        JOIN `user` u ON br.user_id = u.id
+        JOIN book b ON br.book_id = b.id
+        ORDER BY br.borrow_date DESC
+    </select>
+</mapper>

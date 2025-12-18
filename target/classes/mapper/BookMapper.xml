@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.library.mapper.BookMapper">
+    <resultMap id="BookResultMap" type="com.example.library.entity.Book">
+        <id property="id" column="id"/>
+        <result property="isbn" column="isbn"/>
+        <result property="title" column="title"/>
+        <result property="author" column="author"/>
+        <result property="publisher" column="publisher"/>
+        <result property="publishDate" column="publish_date"/>
+        <result property="genre" column="category"/>
+        <result property="description" column="description"/>
+        <result property="stock" column="available_quantity"/>
+    </resultMap>
+    
+    <insert id="insertBook" parameterType="com.example.library.entity.Book" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO book (isbn, title, author, publisher, publish_date, category, description, total_quantity, available_quantity)
+        VALUES (#{isbn}, #{title}, #{author}, #{publisher}, #{publishDate}, #{genre}, #{description}, #{stock}, #{stock})
+    </insert>
+    
+    <select id="findById" resultMap="BookResultMap">
+        SELECT * FROM book WHERE id = #{id}
+    </select>
+    
+    <select id="findAll" resultMap="BookResultMap">
+        SELECT * FROM book
+    </select>
+    
+    <select id="findByTitle" resultMap="BookResultMap">
+        SELECT * FROM book WHERE title LIKE CONCAT('%', #{title}, '%')
+    </select>
+    
+    <select id="findByAuthor" resultMap="BookResultMap">
+        SELECT * FROM book WHERE author LIKE CONCAT('%', #{author}, '%')
+    </select>
+    
+    <select id="findByGenre" resultMap="BookResultMap">
+        SELECT * FROM book WHERE category = #{genre}
+    </select>
+    
+    <update id="updateBook" parameterType="com.example.library.entity.Book">
+        UPDATE book
+        SET isbn = #{isbn}, title = #{title}, author = #{author}, publisher = #{publisher},
+            publish_date = #{publishDate}, category = #{genre}, description = #{description}, 
+            total_quantity = #{stock}, available_quantity = #{stock}
+        WHERE id = #{id}
+    </update>
+    
+    <delete id="deleteBook">
+        DELETE FROM book WHERE id = #{id}
+    </delete>
+    
+    <update id="updateStock">
+        UPDATE book SET available_quantity = #{stock} WHERE id = #{id}
+    </update>
+</mapper>

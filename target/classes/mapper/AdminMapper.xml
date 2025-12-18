@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.library.mapper.AdminMapper">
+    <resultMap id="AdminResultMap" type="com.example.library.entity.Admin">
+        <id property="id" column="id"/>
+        <result property="username" column="username"/>
+        <result property="password" column="password"/>
+    </resultMap>
+    
+    <insert id="insertAdmin" parameterType="com.example.library.entity.Admin" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO admin (username, password)
+        VALUES (#{username}, #{password})
+    </insert>
+    
+    <select id="findByUsername" resultMap="AdminResultMap">
+        SELECT * FROM admin WHERE username = #{username}
+    </select>
+    
+    <select id="findById" resultMap="AdminResultMap">
+        SELECT * FROM admin WHERE id = #{id}
+    </select>
+    
+    <select id="findAll" resultMap="AdminResultMap">
+        SELECT * FROM admin
+    </select>
+    
+    <update id="updateAdmin" parameterType="com.example.library.entity.Admin">
+        UPDATE admin
+        SET username = #{username}, password = #{password}
+        WHERE id = #{id}
+    </update>
+    
+    <delete id="deleteAdmin">
+        DELETE FROM admin WHERE id = #{id}
+    </delete>
+</mapper>

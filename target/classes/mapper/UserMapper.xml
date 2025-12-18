@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.library.mapper.UserMapper">
+    <resultMap id="UserResultMap" type="com.example.library.entity.User">
+        <id property="id" column="id"/>
+        <result property="username" column="username"/>
+        <result property="password" column="password"/>
+        <result property="role" column="role"/>
+        <result property="email" column="email"/>
+        <result property="createdAt" column="created_at"/>
+    </resultMap>
+    
+    <insert id="insertUser" parameterType="com.example.library.entity.User" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO `user` (username, password, role, email, created_at)
+        VALUES (#{username}, #{password}, #{role}, #{email}, #{createdAt})
+    </insert>
+    
+    <select id="findByUsername" resultMap="UserResultMap">
+        SELECT * FROM `user` WHERE username = #{username}
+    </select>
+    
+    <select id="findById" resultMap="UserResultMap">
+        SELECT * FROM `user` WHERE id = #{id}
+    </select>
+    
+    <select id="findAll" resultMap="UserResultMap">
+        SELECT * FROM `user`
+    </select>
+    
+    <update id="updateUser" parameterType="com.example.library.entity.User">
+        UPDATE `user`
+        SET username = #{username},
+            <if test="password != null and password != ''">
+                password = #{password},
+            </if>
+            role = #{role}, email = #{email}
+        WHERE id = #{id}
+    </update>
+    
+    <delete id="deleteUser">
+        DELETE FROM `user` WHERE id = #{id}
+    </delete>
+</mapper>

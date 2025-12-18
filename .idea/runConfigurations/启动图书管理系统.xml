@@ -1,0 +1,36 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="启动图书管理系统" type="CompoundRunConfigurationType">
+    <toRun type="SpringBootApplicationConfigurationType" name="Backend-Server">
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="MAIN_CLASS_NAME" value="com.example.library.LibraryManagementSystemApplication" />
+      <option name="PROGRAM_PARAMETERS" value="" />
+      <option name="VM_PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <module name="trae" />
+      <envs />
+      <option name="USE_PROJECT_CLASSPATH" value="true" />
+      <option name="INCLUDE_PROVIDED_SCOPE" value="true" />
+      <option name="RUN_TARGET_MODULE_NAME" value="$PROJECT_DIR$" />
+      <option name="SPRING_BOOT_MAIN_CLASS_NAME" value="com.example.library.LibraryManagementSystemApplication" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="SHORTEN_COMMAND_LINE" value="NONE" />
+      <option name="UPDATE_ACTION_UPDATE_POLICY" value="UpdateResources" />
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClasses" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </toRun>
+    <toRun type="NodeJSConfigurationType" name="Frontend-Server">
+      <option name="node-js-mocha-support.node-js-mocha-support.enabled" value="true" />
+      <option name="nodejs_parameters" value="" />
+      <option name="working_directory" value="$PROJECT_DIR$/frontend" />
+      <option name="path_to_node" value="node" />
+      <option name="path_to_js_file" value="server.js" />
+      <option name="nodejs_package_manager_path" value="npm" />
+      <envs />
+      <method v="2" />
+    </toRun>
+    <method v="2" />
+  </configuration>
+</component>
